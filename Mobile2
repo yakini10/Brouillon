@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="24dp"
+    android:background="#FFF0F5">
+
+    <TextView
+        android:id="@+id/textViewContact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Контактные данные"
+        android:textColor="#000000"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="40dp" />
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Нет данных"
+        android:textColor="#000000"
+        android:textSize="22sp"
+        android:layout_marginBottom="30dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/buttonPrevious"
+            android:layout_width="70dp"
+            android:layout_height="60dp"
+            android:contentDescription="Предыдущий контакт"
+            android:src="@android:drawable/ic_media_previous"
+            android:backgroundTint="#D8BFD8" />
+
+        <ImageButton
+            android:id="@+id/buttonNext"
+            android:layout_width="70dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="40dp"
+            android:contentDescription="Следующий контакт"
+            android:src="@android:drawable/ic_media_next"
+            android:backgroundTint="#D8BFD8" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Добавить"
+        android:textSize="18sp"
+        android:backgroundTint="#4CAF50" />
+
+    <Button
+        android:id="@+id/buttonEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="Изменить"
+        android:textSize="18sp"
+        android:backgroundTint="#FF9800" />
+
+</LinearLayout>
