@@ -72,3 +72,79 @@
         android:backgroundTint="#FF9800" />
 
 </LinearLayout>
+
+
+
+import android.content.Intent
+import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
+
+class MainActivity : AppCompatActivity() {
+
+    private val viewModel: ContactViewModel by viewModels()
+
+    private lateinit var textViewName: TextView
+    private lateinit var buttonPrevious: ImageButton
+    private lateinit var buttonNext: ImageButton
+    private lateinit var buttonAdd: Button
+    private lateinit var buttonEdit: Button
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
+        textViewName = findViewById(R.id.textViewName)
+        buttonPrevious = findViewById(R.id.buttonPrevious)
+        buttonNext = findViewById(R.id.buttonNext)
+        buttonAdd = findViewById(R.id.buttonAdd)
+        buttonEdit = findViewById(R.id.buttonEdit)
+
+        updateContact()
+
+        buttonPrevious.setOnClickListener {
+            viewModel.previousContact()
+            updateContact()
+        }
+
+        buttonNext.setOnClickListener {
+            viewModel.nextContact()
+            updateContact()
+        }
+
+        buttonAdd.setOnClickListener {
+            val intent = Intent(this, EditActivity::class.java)
+            intent.putExtra("mode", "add")
+            startActivity(intent)
+        }
+
+        buttonEdit.setOnClickListener {
+            if (viewModel.hasContacts()) {
+                val intent = Intent(this, EditActivity::class.java)
+                intent.putExtra("mode", "edit")
+                startActivity(intent)
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (::textViewName.isInitialized) {
+            updateContact()
+        }
+    }
+
+    private fun updateContact() {
+        val contact = viewModel.getCurrentContact()
+
+        if (contact == null) {
+            textViewName.text = "Нет данных"
+        } else {
+            textViewName.text =
+                "${contact.surname} ${contact.name} ${contact.patronymic}\n${contact.phone}"
+        }
+    }
+}
