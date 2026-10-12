@@ -259,3 +259,83 @@ class ContactViewModel : ViewModel() {
         android:backgroundTint="#4CAF50" />
 
 </LinearLayout>
+
+
+
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+
+class EditActivity : AppCompatActivity() {
+
+    private val viewModel: ContactViewModel by viewModels()
+
+    private lateinit var editSurname: EditText
+    private lateinit var editName: EditText
+    private lateinit var editPatronymic: EditText
+    private lateinit var editPhone: EditText
+
+    private lateinit var buttonSave: Button
+
+    private var mode = "add"
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_edit)
+
+        editSurname = findViewById(R.id.editSurname)
+        editName = findViewById(R.id.editName)
+        editPatronymic = findViewById(R.id.editPatronymic)
+        editPhone = findViewById(R.id.editPhone)
+        buttonSave = findViewById(R.id.buttonSave)
+
+        mode = intent.getStringExtra("mode") ?: "add"
+
+        if (mode == "edit") {
+            val contact = viewModel.getCurrentContact()
+
+            if (contact != null) {
+                editSurname.setText(contact.surname)
+                editName.setText(contact.name)
+                editPatronymic.setText(contact.patronymic)
+                editPhone.setText(contact.phone)
+            }
+        }
+
+        buttonSave.setOnClickListener {
+            val surname = editSurname.text.toString().trim()
+            val name = editName.text.toString().trim()
+            val patronymic = editPatronymic.text.toString().trim()
+            val phone = editPhone.text.toString().trim()
+
+            if (surname.isEmpty() || name.isEmpty() ||
+                patronymic.isEmpty() || phone.isEmpty()
+            ) {
+                Toast.makeText(
+                    this,
+                    "Заполните все поля",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                val contact = Contact(
+                    surname,
+                    name,
+                    patronymic,
+                    phone
+                )
+
+                if (mode == "edit") {
+                    viewModel.editContact(contact)
+                } else {
+                    viewModel.addContact(contact)
+                }
+
+                finish()
+            }
+        }
+    }
+}
