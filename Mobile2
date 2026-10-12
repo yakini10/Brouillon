@@ -148,3 +148,49 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+
+import androidx.lifecycle.ViewModel
+
+class ContactViewModel : ViewModel() {
+
+    private val contacts = mutableListOf<Contact>()
+
+    private var currentIndex = 0
+
+    fun getCurrentContact(): Contact? {
+        return if (contacts.isEmpty()) {
+            null
+        } else {
+            contacts[currentIndex]
+        }
+    }
+
+    fun hasContacts(): Boolean {
+        return contacts.isNotEmpty()
+    }
+
+    fun addContact(contact: Contact) {
+        contacts.add(contact)
+        currentIndex = contacts.lastIndex
+    }
+
+    fun editContact(contact: Contact) {
+        if (contacts.isNotEmpty()) {
+            contacts[currentIndex] = contact
+        }
+    }
+
+    fun previousContact() {
+        if (contacts.isNotEmpty()) {
+            currentIndex =
+                (currentIndex - 1 + contacts.size) % contacts.size
+        }
+    }
+
+    fun nextContact() {
+        if (contacts.isNotEmpty()) {
+            currentIndex = (currentIndex + 1) % contacts.size
+        }
+    }
+}
